@@ -16,6 +16,7 @@ export class AppComponent extends Form {
   inlognaam: string;
   aanmakenFormulierZichtbaar: boolean;
   gerechten: Array<Gerecht>;
+  randomGerecht: Gerecht;
 
   constructor(
     private fb: FormBuilder,
@@ -64,11 +65,21 @@ export class AppComponent extends Form {
       });
     });
   }
+
+  getRandomGerecht() {
+    this.gebruiker = {
+      naam: this.form.get('Gebruikersnaam').value,
+      wachtwoord: this.form.get('Wachtwoord').value
+    };
+    this.appService.getRandomGerecht(this.gebruiker).subscribe((gerecht: Gerecht) => {
+      this.randomGerecht = gerecht;
+    });
+  }
 }
 
 // v post nieuwe gebruiker
 // v login gebruiker
 // post gerecht
-// get gerecht (random)
+// v get gerecht (random)
 // get alle gerechten
 // verwijder gerecht

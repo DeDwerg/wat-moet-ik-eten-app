@@ -4,6 +4,7 @@ export class Gerecht {
   vlees: boolean;
   aantalPersonen: number;
   gebruikerId: number;
+  vegetarisch: boolean;
   // ingredienten[]: Ingredient;
 
   // {

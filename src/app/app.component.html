@@ -16,7 +16,7 @@
         </div>
       </form>
       <div class="col">
-        <button type="aanmaken" id="btnAanmaken" (click)="aanmaken = true">Aanmaken</button>
+        <button id="btnAanmaken" (click)="aanmaken = true">Aanmaken</button>
       </div>
     </div>
     <div *ngIf="aanmaken">
@@ -39,5 +39,9 @@
     <p>inlognaam: {{ inlognaam }}</p>
     <p>uw gerechten:</p>
     <p *ngFor="let gerecht of gerechten"> {{ gerecht.naam }}</p>
+    <button id="btnGetRandomGerecht" (click)=getRandomGerecht()>Zoek random gerecht</button>
+    <div *ngIf="randomGerecht">
+      Uw random gerecht is: {{ randomGerecht.naam }}
+    </div>
   </div>
 </div>

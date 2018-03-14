@@ -15,6 +15,7 @@ export class AppService {
   }
 
   gebruiker: Gebruiker;
+  randomGerecht: Gerecht;
 
   checkLogin(gebruiker: Gebruiker): Observable<string> {
     this.gebruiker = gebruiker;
@@ -33,32 +34,43 @@ export class AppService {
   }
 
   getGerechten(gebruiker: Gebruiker): Observable<Gerecht[]> {
-    // this.gebruiker = gebruiker
     return this.http
     .post<Gerecht[]>('http://localhost:2703/get/alle/gerechten', gebruiker)
-    .map((response: Gerecht[]) => this.mapGerechtResponse(response))
+    .map((response: Gerecht[]) => this.mapGerechtenResponse(response))
     .catch(this.handleErrorObservable);
   }
 
-  private mapGerechtResponse(response: Gerecht[]): Gerecht[] {
+  getRandomGerecht(gebruiker: Gebruiker): Observable<Gerecht> {
+    return this.http
+    .post<Gerecht>('http://localhost:2703/get/random/gerecht', gebruiker)
+    .map((response: Gerecht) => this.mapGerechtResponse(response))
+    .catch(this.handleErrorObservable);
+  }
+
+  private mapGerechtResponse(response: Gerecht): Gerecht {
+    this.randomGerecht = this.responseToGerecht(response);
+    return this.randomGerecht;
+  }
+
+  private responseToGerecht(response: Gerecht): Gerecht {
+    const body = response;
+    return {
+      naam: body.naam,
+      vis: body.vis,
+      vlees: body.vlees,
+      aantalPersonen: body.aantalPersonen,
+      gebruikerId: body.gebruikerId,
+      vegetarisch: body.vegetarisch
+    };
+  }
+
+  private mapGerechtenResponse(response: Gerecht[]): Gerecht[] {
     const gerechten: Gerecht[] = [];
     response.forEach(gerecht => {
       gerechten.push(gerecht);
     });
     return gerechten;
   }
-
-  // private mapFetchTijdsslotenResponse(response: TijdsslotResponse[]): Tijdsslot[] {
-  //   const tijdssloten: Tijdsslot[] = [];
-  //   response.forEach(tijdsslot => {
-  //     tijdssloten.push({
-  //       afspraakStart: new Date(tijdsslot.afspraakStart),
-  //       afspraakEind: new Date(tijdsslot.afspraakEind),
-  //       score: tijdsslot.score
-  //     });
-  //   });
-  //   return tijdssloten;
-  // }
 
   private handleErrorObservable(error: Response | any) {
     return Observable.throw(error);
