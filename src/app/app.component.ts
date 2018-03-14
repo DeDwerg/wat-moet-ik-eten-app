@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Form } from '../app/form/form';
 import { AppService } from '../app/app.service';
 import { Gebruiker } from './gebruiker.model';
+import { Gerecht } from './gerecht.model';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ import { Gebruiker } from './gebruiker.model';
 export class AppComponent extends Form {
   gebruiker: Gebruiker;
   inlognaam: string;
-  aanmaken: boolean;
+  aanmakenFormulierZichtbaar: boolean;
+  gerechten: Array<Gerecht>;
 
   constructor(
     private fb: FormBuilder,
@@ -43,30 +45,28 @@ export class AppComponent extends Form {
       wachtwoord: this.form.get('Wachtwoord').value
     };
     this.appService.checkLogin(this.gebruiker).subscribe((inlognaam: string) => {
-      console.log(inlognaam);
-      console.log(this.inlognaam);
       this.inlognaam = inlognaam;
-      console.log(this.inlognaam);
+      this.appService.getGerechten(this.gebruiker).subscribe((gerechten: Array<Gerecht>) => {
+        this.gerechten = gerechten;
+      });
     });
   }
 
   gebruikerAanmaken() {
-    this.aanmaken = true;
-    console.log('aangemaakt');
+    this.gebruiker = {
+      naam: this.form.get('Gebruikersnaam').value,
+      wachtwoord: this.form.get('Wachtwoord').value
+    };
+    this.appService.gebruikerAanmaken(this.gebruiker).subscribe((inlognaam: string) => {
+      this.inlognaam = inlognaam;
+      this.appService.getGerechten(this.gebruiker).subscribe((gerechten: Array<Gerecht>) => {
+        this.gerechten = gerechten;
+      });
+    });
   }
 }
 
-
-// this.afspraakService.getAfspraak().subscribe((afspraak: Afspraak) => {
-//   this.afspraak = afspraak;
-//   this.determineInitialWeek();
-//   this.fetchTijdssloten();
-// }, (error) => {
-//   console.error('Unhandled getAfspraak.error: ', error);
-//   this.loading = false;
-// });
-
-// post nieuwe gebruiker
+// v post nieuwe gebruiker
 // v login gebruiker
 // post gerecht
 // get gerecht (random)

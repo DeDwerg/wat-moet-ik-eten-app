@@ -1,7 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <div *ngIf="!inlognaam">
-    <div *ngIf="!aanmaken">
+    <div aanmaken:boolean=f alse *ngIf="!aanmaken">
       <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
         <div class="form-group">
           <label id="lblGebruikersnaam" for="txtGebruikersnaam" class="col-form-label">Gebruikersnaam</label>
@@ -16,7 +16,7 @@
         </div>
       </form>
       <div class="col">
-        <button type="aanmaken" id="btnAanmaken" (click)=gebruikerAanmaken()>Aanmaken</button>
+        <button type="aanmaken" id="btnAanmaken" (click)="aanmaken = true">Aanmaken</button>
       </div>
     </div>
     <div *ngIf="aanmaken">
@@ -36,6 +36,8 @@
     </div>
   </div>
   <div *ngIf="inlognaam">
-    inlognaam: {{ inlognaam }}
+    <p>inlognaam: {{ inlognaam }}</p>
+    <p>uw gerechten:</p>
+    <p *ngFor="let gerecht of gerechten"> {{ gerecht.naam }}</p>
   </div>
 </div>
