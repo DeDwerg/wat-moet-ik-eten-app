@@ -43,5 +43,26 @@
     <div *ngIf="randomGerecht">
       Uw random gerecht is: {{ randomGerecht.naam }}
     </div>
+    <button id="btnGerechtToevoegen" (click)="gerechtAanmakenZichtbaar = true">gerecht toevoegen</button>
+    <div *ngIf="gerechtAanmakenZichtbaar">
+      <form [formGroup]="form" (ngSubmit)="gerechtAanmaken()" novalidate>
+        <div class="form-group">
+          <label id="lblGerechtNaam" for="txtGerechtNaam" class="col-form-label">Naam</label>
+          <input type="text" class="form-control" id="txtGerechtNaam" formControlName="GerechtNaam">
+          <label id="lblVlees" for="tbVlees" class="col-form-label" checked=false>Bevat vlees</label>
+          <input type="checkbox" class="form-control" id="tbVlees" formControlName="Vlees">
+          <label id="lblVis" for="tbVis" class="col-form-label" checked=false>Bevat vis</label>
+          <input type="checkbox" class="form-control" id="tbVis" formControlName="Vis">
+          <label id="lblAantalPersonen" for="txtAantalPersonen" class="col-form-label">Aantal personen</label>
+          <input type="text" class="form-control" id="txtAantalPersonen" formControlName="AantalPersonen">
+        </div>
+        https://medium.com/spektrakel-blog/angular2-building-nested-reactive-forms-7978ecd145e4
+        <div class="row">
+          <div class="col">
+            <button type="submit" id="btnSubmit">Toevoegen</button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

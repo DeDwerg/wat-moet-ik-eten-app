@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Form } from '../app/form/form';
 import { AppService } from '../app/app.service';
@@ -17,6 +17,8 @@ export class AppComponent extends Form {
   aanmakenFormulierZichtbaar: boolean;
   gerechten: Array<Gerecht>;
   randomGerecht: Gerecht;
+  gerechtAanmakenZichtbaar: boolean;
+  gerecht: Gerecht;
 
   constructor(
     private fb: FormBuilder,
@@ -35,7 +37,11 @@ export class AppComponent extends Form {
   protected createForm() {
     this.form = this.fb.group({
       Gebruikersnaam: [''],
-      Wachtwoord: ['']
+      Wachtwoord: [''],
+      GerechtNaam: [''],
+      Vlees: [''],
+      Vis: [''],
+      AantalPersonen: ['']
     });
     super.createForm();
   }
@@ -75,11 +81,24 @@ export class AppComponent extends Form {
       this.randomGerecht = gerecht;
     });
   }
+
+  gerechtAanmaken() {
+    this.gerecht = {
+      naam: this.form.get('GerechtNaam').value,
+      vis: this.form.get('Vis').value || false,
+      vlees: this.form.get('Vlees').value || false,
+      aantalPersonen: Number(this.form.get('AantalPersonen').value) || 1,
+      gebruikerId: undefined,
+      vegetarisch: undefined
+    };
+    // this.appService.postNieuwGerecht(this.gerecht).subscribe
+    console.log(this.gerecht);
+  }
 }
 
 // v post nieuwe gebruiker
 // v login gebruiker
 // post gerecht
 // v get gerecht (random)
-// get alle gerechten
+// v get alle gerechten
 // verwijder gerecht
