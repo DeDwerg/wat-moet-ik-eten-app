@@ -56,10 +56,30 @@
           <label id="lblAantalPersonen" for="txtAantalPersonen" class="col-form-label">Aantal personen</label>
           <input type="text" class="form-control" id="txtAantalPersonen" formControlName="AantalPersonen">
         </div>
-        https://medium.com/spektrakel-blog/angular2-building-nested-reactive-forms-7978ecd145e4
         <div class="row">
           <div class="col">
             <button type="submit" id="btnSubmit">Toevoegen</button>
+            <!-- hier ingredienten weer legen en sturen van ingredienten die op dat moment aanewzig zijn -->
+          </div>
+        </div>
+      </form>
+    </div>
+    <div *ngFor="let ingredient of ingredienten">
+      {{ ingredient.naam }} - {{ ingredient.hoeveelheid }} {{ ingredient.eenheid }}
+    </div>
+    <div *ngIf="gerechtAanmakenZichtbaar">
+      <form [formGroup]="form" (ngSubmit)="ingredientToevoegen()" novalidate>
+        <div class="form-group">
+          <label id="lblIngredientNaam" for="txtIngredientNaam" class="col-form-label">Naam</label>
+          <input type="text" class="form-control" id="txtIngredientNaam" formControlName="IngredientNaam">
+          <label id="lblHoveelheid" for="txtHoeveelheid" class="col-form-label">Hoeveelheid</label>
+          <input type="text" class="form-control" id="txtHoeveelheid" formControlName="Hoeveelheid">
+          <label id="lblEenheid" for="txtEenheid" class="col-form-label">Eenheid</label>
+          <input type="text" class="form-control" id="txtEenheid" formControlName="Eenheid">
+        </div>
+        <div class="row">
+          <div class="col">
+            <button type="submit" id="btnSubmit">Ingredient toevoegen</button>
           </div>
         </div>
       </form>
