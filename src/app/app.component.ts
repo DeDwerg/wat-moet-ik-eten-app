@@ -49,10 +49,11 @@ export class AppComponent extends Form {
   submitForm() {
     this.gebruiker = {
       naam: this.form.get('Gebruikersnaam').value,
-      wachtwoord: this.form.get('Wachtwoord').value
+      wachtwoord: this.form.get('Wachtwoord').value,
     };
-    this.appService.checkLogin(this.gebruiker).subscribe((inlognaam: string) => {
-      this.inlognaam = inlognaam;
+    this.appService.checkLogin(this.gebruiker).subscribe((gebruiker: Gebruiker) => {
+      this.gebruiker = gebruiker;
+      this.inlognaam = gebruiker.naam;
       this.appService.getGerechten(this.gebruiker).subscribe((gerechten: Array<Gerecht>) => {
         this.gerechten = gerechten;
       });
@@ -64,8 +65,9 @@ export class AppComponent extends Form {
       naam: this.form.get('Gebruikersnaam').value,
       wachtwoord: this.form.get('Wachtwoord').value
     };
-    this.appService.gebruikerAanmaken(this.gebruiker).subscribe((inlognaam: string) => {
-      this.inlognaam = inlognaam;
+    this.appService.gebruikerAanmaken(this.gebruiker).subscribe((gebruiker: Gebruiker) => {
+      this.gebruiker = gebruiker;
+      this.inlognaam = gebruiker.naam;
       this.appService.getGerechten(this.gebruiker).subscribe((gerechten: Array<Gerecht>) => {
         this.gerechten = gerechten;
       });
@@ -73,10 +75,6 @@ export class AppComponent extends Form {
   }
 
   getRandomGerecht() {
-    this.gebruiker = {
-      naam: this.form.get('Gebruikersnaam').value,
-      wachtwoord: this.form.get('Wachtwoord').value
-    };
     this.appService.getRandomGerecht(this.gebruiker).subscribe((gerecht: Gerecht) => {
       this.randomGerecht = gerecht;
     });
@@ -88,11 +86,14 @@ export class AppComponent extends Form {
       vis: this.form.get('Vis').value || false,
       vlees: this.form.get('Vlees').value || false,
       aantalPersonen: Number(this.form.get('AantalPersonen').value) || 1,
-      gebruikerId: undefined,
+      gebruikerId: this.gebruiker.id,
       vegetarisch: undefined
     };
-    // this.appService.postNieuwGerecht(this.gerecht).subscribe
-    console.log(this.gerecht);
+    this.appService.postNieuwGerecht(this.gerecht).subscribe((gerecht: Gerecht) => {
+      this.appService.getGerechten(this.gebruiker).subscribe((gerechten: Array<Gerecht>) => {
+        this.gerechten = gerechten;
+      });
+    });
   }
 }
 

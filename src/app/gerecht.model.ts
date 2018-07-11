@@ -2,8 +2,8 @@ export class Gerecht {
   naam: string;
   vis: boolean;
   vlees: boolean;
-  aantalPersonen: number;
-  gebruikerId: number;
+  aantalPersonen: Number;
+  gebruikerId: Number;
   vegetarisch: boolean;
   // ingredienten[]: Ingredient;
 

@@ -17,19 +17,19 @@ export class AppService {
   gebruiker: Gebruiker;
   randomGerecht: Gerecht;
 
-  checkLogin(gebruiker: Gebruiker): Observable<string> {
+  checkLogin(gebruiker: Gebruiker): Observable<Gebruiker> {
     this.gebruiker = gebruiker;
     return this.http
-      .post<Response>('http://localhost:2703/login/gebruiker', this.gebruiker)
-      .map((response: Response) => this.mapHttpResponse(response))
+      .post<Gebruiker>('http://localhost:2703/login/gebruiker', this.gebruiker)
+      .map((response: Gebruiker) => this.mapGebruikerResponse(response))
       .catch(this.handleErrorObservable);
   }
 
-  gebruikerAanmaken(gebruiker: Gebruiker): Observable<string> {
+  gebruikerAanmaken(gebruiker: Gebruiker): Observable<Gebruiker> {
     this.gebruiker = gebruiker;
     return this.http
-      .post<Response>('http://localhost:2703/post/gebruiker', this.gebruiker)
-      .map((response: Response) => this.mapHttpResponse(response))
+      .post<Gebruiker>('http://localhost:2703/post/gebruiker', this.gebruiker)
+      .map((response: Gebruiker) => this.mapGebruikerResponse(response))
       .catch(this.handleErrorObservable);
   }
 
@@ -43,6 +43,12 @@ export class AppService {
   getRandomGerecht(gebruiker: Gebruiker): Observable<Gerecht> {
     return this.http
     .post<Gerecht>('http://localhost:2703/get/random/gerecht', gebruiker)
+    .map((response: Gerecht) => this.mapGerechtResponse(response))
+    .catch(this.handleErrorObservable);
+  }
+
+  postNieuwGerecht(gerecht: Gerecht): Observable<Gerecht> {
+    return this.http.post<Gerecht>('http://localhost:2703/post/gerecht', gerecht)
     .map((response: Gerecht) => this.mapGerechtResponse(response))
     .catch(this.handleErrorObservable);
   }
@@ -76,7 +82,12 @@ export class AppService {
     return Observable.throw(error);
   }
 
-  private mapHttpResponse(response: Response) {
-    return this.gebruiker.naam;
+  private mapGebruikerResponse(response: Gebruiker) {
+    const gebruiker: Gebruiker = {
+      naam: response.naam,
+      wachtwoord: response.wachtwoord,
+      id: response.id
+    };
+    return gebruiker;
   }
 }
