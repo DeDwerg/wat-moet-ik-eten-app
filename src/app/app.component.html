@@ -38,7 +38,12 @@
   <div *ngIf="inlognaam">
     <p>inlognaam: {{ inlognaam }}</p>
     <p>uw gerechten:</p>
-    <p *ngFor="let gerecht of gerechten"> {{ gerecht.naam }}</p>
+    <div *ngFor="let gerecht of gerechten"> {{ gerecht.naam }}
+      ingredienten:
+      <div *ngFor="let ingredient of gerecht.ingredienten ">
+        {{ ingredient.hoeveelheid }} {{ ingredient.eenheid }} {{ ingredient.naam }} 
+      </div>
+    </div>
     <button id="btnGetRandomGerecht" (click)=getRandomGerecht()>Zoek random gerecht</button>
     <div *ngIf="randomGerecht">
       Uw random gerecht is: {{ randomGerecht.naam }}
