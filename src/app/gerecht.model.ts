@@ -1,3 +1,5 @@
+import { Ingredient } from "./ingredient.model";
+
 export class Gerecht {
   naam: string;
   vis: boolean;
@@ -5,5 +7,5 @@ export class Gerecht {
   aantalPersonen: Number;
   gebruikerId: Number;
   vegetarisch: boolean;
+  ingredienten: Array<Ingredient>;
 }
-

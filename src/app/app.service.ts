@@ -66,7 +66,8 @@ export class AppService {
       vlees: body.vlees,
       aantalPersonen: body.aantalPersonen,
       gebruikerId: body.gebruikerId,
-      vegetarisch: body.vegetarisch
+      vegetarisch: body.vegetarisch,
+      ingredienten: body.ingredienten
     };
   }
 

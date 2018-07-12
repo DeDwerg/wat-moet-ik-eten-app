@@ -103,19 +103,16 @@ export class AppComponent extends Form {
       vlees: this.form.get('Vlees').value || false,
       aantalPersonen: Number(this.form.get('AantalPersonen').value) || 1,
       gebruikerId: this.gebruiker.id,
-      vegetarisch: undefined
+      vegetarisch: undefined,
+      ingredienten: this.ingredienten
     };
     this.appService.postNieuwGerecht(this.gerecht).subscribe((gerecht: Gerecht) => {
       this.appService.getGerechten(this.gebruiker).subscribe((gerechten: Array<Gerecht>) => {
         this.gerechten = gerechten;
       });
     });
+    this.ingredienten = [];
   }
 }
 
-// v post nieuwe gebruiker
-// v login gebruiker
-// v post gerecht
-// v get gerecht (random)
-// v get alle gerechten
-// verwijder gerecht
+// laatste mee bezig ingredienten meesturen met een gerecht java klaagt over niet serializable, java en ng code is nog niet gepushed
