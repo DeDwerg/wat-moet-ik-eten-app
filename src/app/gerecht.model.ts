@@ -1,6 +1,7 @@
 import { Ingredient } from "./ingredient.model";
 
 export class Gerecht {
+  id: Number;
   naam: string;
   vis: boolean;
   vlees: boolean;
