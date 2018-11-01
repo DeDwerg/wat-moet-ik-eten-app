@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
-import { Gebruiker } from './gebruiker.model';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { Gerecht } from './gerecht.model';
+import { Gebruiker } from '../gebruiker.model';
+import { Gerecht } from '../gerecht.model';
 
 @Injectable()
-export class AppService {
+export class Service {
   constructor(
     private http: HttpClient
   ) {
@@ -53,6 +53,10 @@ export class AppService {
     .catch(this.handleErrorObservable);
   }
 
+  verwijderGerecht(gerecht: Gerecht) {
+    this.http.delete<Gerecht>('http://localhost:2703/verwijder/gerecht/' + gerecht.id);
+  }
+
   private mapGerechtResponse(response: Gerecht): Gerecht {
     this.randomGerecht = this.responseToGerecht(response);
     return this.randomGerecht;
@@ -67,7 +71,8 @@ export class AppService {
       aantalPersonen: body.aantalPersonen,
       gebruikerId: body.gebruikerId,
       vegetarisch: body.vegetarisch,
-      ingredienten: body.ingredienten
+      ingredienten: body.ingredienten,
+      id: response.id
     };
   }
 

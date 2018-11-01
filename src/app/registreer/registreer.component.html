@@ -1,0 +1,13 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  <div class="form-group">
+    <label id="lblGebruikersnaam" for="txtGebruikersnaam" class="col-form-label">Gebruikersnaam</label>
+    <input type="text" class="form-control" id="txtGebruikersnaam" formControlName="Gebruikersnaam">
+    <label id="lblWachtwoord" for="txtWachtwoord" class="col-form-label">Wachtwoord</label>
+    <input type="text" class="form-control" id="txtWachtwoord" formControlName="Wachtwoord" type="password">
+  </div>
+  <div class="row">
+    <div class="col">
+      <button type="submit" id="btnSubmit">Aanmelden</button>
+    </div>
+  </div>
+</form>
