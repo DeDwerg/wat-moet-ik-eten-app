@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Service } from '../shared/service';
 import { Gebruiker } from '../gebruiker.model';
 import { Router } from '@angular/router';
+import { ActiveGebruiker } from '../shared/active-gebruiker';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent extends Form implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private activeGebruiker: ActiveGebruiker,
     private service: Service
   ) {
     super();
@@ -41,9 +43,9 @@ export class LoginComponent extends Form implements OnInit {
       wachtwoord: this.form.get('Wachtwoord').value,
     }
     this.service.checkLogin(this.gebruiker).subscribe((gebruiker: Gebruiker) => {
-      this.gebruiker = gebruiker;
+      this.activeGebruiker.setGebruiker(gebruiker);
       this.router.navigate(['overzicht']);
-    })
+    });
   }
 
   ngOnInit() {

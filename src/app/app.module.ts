@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { RegistreerComponent } from './registreer/registreer.component';
 import { OverzichtComponent } from './overzicht/overzicht.component';
 import { Service } from './shared/service';
+import { ActiveGebruiker } from './shared/active-gebruiker';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { Service } from './shared/service';
     ReactiveFormsModule
   ],
   providers: [
+    ActiveGebruiker,
     Service
   ],
   bootstrap: [AppComponent]
