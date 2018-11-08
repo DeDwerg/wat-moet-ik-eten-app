@@ -6,6 +6,7 @@ import { Ingredient } from '../ingredient.model';
 import { Service } from '../shared/service';
 import { Form } from '../form/form';
 import { ActiveGebruiker } from '../shared/active-gebruiker';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-overzicht',
@@ -26,9 +27,13 @@ export class OverzichtComponent extends Form implements OnInit {
   constructor(
     private fb: FormBuilder,
     private appService: Service,
+    private router: Router,
     private activeGebruiker: ActiveGebruiker
   ) {
     super();
+    if(this.activeGebruiker.getGebruiker() === undefined) {
+      this.router.navigate(['login']);
+    }
     this.createForm();
   }
 
