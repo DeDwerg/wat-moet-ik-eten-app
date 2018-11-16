@@ -2,12 +2,14 @@
   <p>inlognaam: {{ gebruiker.naam }}</p>
 </div>
 <p>uw gerechten:</p>
-<div *ngFor="let gerecht of gerechten"> {{ gerecht.naam }}
-  <!-- <button (click)="verwijderGerecht(gerecht)">verwijderen</button> -->
-  <br/> ingredienten:
-  <div *ngFor="let ingredient of gerecht.ingredienten ">
-    {{ ingredient.hoeveelheid }} {{ ingredient.eenheid }} {{ ingredient.naam }}
-    <!-- <button (click)="verwijderIngredient(ingredient)">verwijderen</button> -->
+<div class="row">
+  <div class="box" *ngFor="let gerecht of gerechten"> {{ gerecht.naam }}
+    <!-- <button (click)="verwijderGerecht(gerecht)">verwijderen</button> -->
+    <br/> ingredienten:
+    <div class="smallBox" *ngFor="let ingredient of gerecht.ingredienten ">
+      {{ ingredient.hoeveelheid }} {{ ingredient.eenheid }} {{ ingredient.naam }}
+      <!-- <button (click)="verwijderIngredient(ingredient)">verwijderen</button> -->
+    </div>
   </div>
 </div>
 <button id="btnGetRandomGerecht" (click)=getRandomGerecht()>Zoek random gerecht</button>
