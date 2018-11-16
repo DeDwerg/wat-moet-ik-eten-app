@@ -39,6 +39,9 @@ export class OverzichtComponent extends Form implements OnInit {
 
   ngOnInit() {
     this.gebruiker = this.activeGebruiker.getGebruiker();
+    this.appService.getGerechten(this.gebruiker).subscribe((gerechten: Array<Gerecht>) => {
+      this.gerechten = gerechten;
+    });
    }
 
   form: FormGroup;
@@ -63,9 +66,6 @@ export class OverzichtComponent extends Form implements OnInit {
   }
 
   submitForm() {
-    this.appService.getGerechten(this.gebruiker).subscribe((gerechten: Array<Gerecht>) => {
-      this.gerechten = gerechten;
-    });
   }
 
   getRandomGerecht() {
