@@ -6,41 +6,28 @@
   <div class="box" *ngFor="let gerecht of gerechten"> {{ gerecht.naam }}
     <!-- <button (click)="verwijderGerecht(gerecht)">verwijderen</button> -->
     <br/> ingredienten:
-    <div class="smallBox" *ngFor="let ingredient of gerecht.ingredienten ">
-      {{ ingredient.hoeveelheid }} {{ ingredient.eenheid }} {{ ingredient.naam }}
-      <!-- <button (click)="verwijderIngredient(ingredient)">verwijderen</button> -->
+    <div *ngFor="let ingredient of gerecht.ingredienten; let ingredientIndex = index">
+      <div *ngIf="ingredientIndex < 2" class="smallBox">
+        {{ ingredient.hoeveelheid }} {{ ingredient.eenheid }} {{ ingredient.naam }}
+        <!-- <button (click)="verwijderIngredient(ingredient)">verwijderen</button> -->
+      </div>
+      <div *ngIf="isIngredientenExpanded(gerecht) && ingredientIndex >= 2" class="smallBox">
+        {{ ingredient.hoeveelheid }} {{ ingredient.eenheid }} {{ ingredient.naam }}
+      </div>
     </div>
+    <a href="javascript:void(0)" (click)="collapseIngredienten(gerecht)">
+      Alle ingredienten
+    </a>
   </div>
 </div>
 <button id="btnGetRandomGerecht" (click)=getRandomGerecht()>Zoek random gerecht</button>
 <div *ngIf="randomGerecht">
   Uw random gerecht is: {{ randomGerecht.naam }}
+  <button (click)="toevoegenBoodschappenlijst()">toevoegen boodschappenlijst</button>
 </div>
 <button id="btnGerechtToevoegen" (click)="gerechtAanmakenZichtbaar = true">gerecht toevoegen</button>
-<div *ngIf="gerechtAanmakenZichtbaar">
-  <form [formGroup]="form" (ngSubmit)="gerechtAanmaken()" novalidate>
-    <div class="form-group">
-      <label id="lblGerechtNaam" for="txtGerechtNaam" class="col-form-label">Naam</label>
-      <input type="text" class="form-control" id="txtGerechtNaam" formControlName="GerechtNaam">
-      <label id="lblVlees" for="tbVlees" class="col-form-label" checked=false>Bevat vlees</label>
-      <input type="checkbox" class="form-control" id="tbVlees" formControlName="Vlees">
-      <label id="lblVis" for="tbVis" class="col-form-label" checked=false>Bevat vis</label>
-      <input type="checkbox" class="form-control" id="tbVis" formControlName="Vis">
-      <label id="lblAantalPersonen" for="txtAantalPersonen" class="col-form-label">Aantal personen</label>
-      <input type="text" class="form-control" id="txtAantalPersonen" formControlName="AantalPersonen">
-    </div>
-    <div class="row">
-      <div class="col">
-        <button type="submit" id="btnSubmit">Toevoegen</button>
-        <!-- hier ingredienten weer legen en sturen van ingredienten die op dat moment aanewzig zijn -->
-      </div>
-    </div>
-  </form>
-</div>
-<div *ngFor="let ingredient of ingredienten">
-  {{ ingredient.naam }} - {{ ingredient.hoeveelheid }} {{ ingredient.eenheid }}
-</div>
-<div *ngIf="gerechtAanmakenZichtbaar">
+
+<div class="box" *ngIf="gerechtAanmakenZichtbaar">
   <form [formGroup]="form" (ngSubmit)="ingredientToevoegen()" novalidate>
     <div class="form-group">
       <label id="lblIngredientNaam" for="txtIngredientNaam" class="col-form-label">Naam</label>
@@ -56,4 +43,32 @@
       </div>
     </div>
   </form>
+  <form [formGroup]="form" (ngSubmit)="gerechtAanmaken()" novalidate>
+    <div class="form-group">
+      <label id="lblGerechtNaam" for="txtGerechtNaam" class="col-form-label">Naam</label>
+      <input type="text" class="form-control" id="txtGerechtNaam" formControlName="GerechtNaam">
+      <label id="lblVlees" for="tbVlees" class="col-form-label" checked=false>Bevat vlees</label>
+      <input type="checkbox" class="form-control" id="tbVlees" formControlName="Vlees">
+      <label id="lblVis" for="tbVis" class="col-form-label" checked=false>Bevat vis</label>
+      <input type="checkbox" class="form-control" id="tbVis" formControlName="Vis">
+      <label id="lblAantalPersonen" for="txtAantalPersonen" class="col-form-label">Aantal personen</label>
+      <input type="text" class="form-control" id="txtAantalPersonen" formControlName="AantalPersonen">
+    </div>
+    <div class="row">
+      <div class="col">
+        <button type="submit" id="btnSubmit">Gereacht aanmaken</button>
+        <!-- hier ingredienten weer legen en sturen van ingredienten die op dat moment aanewzig zijn -->
+      </div>
+    </div>
+  </form>
+  Toegevoegde ingredienten:
+  <div *ngFor="let ingredient of ingredienten">
+    {{ ingredient.naam }} - {{ ingredient.hoeveelheid }} {{ ingredient.eenheid }}
+    <!-- <button (click)="verwijderIngredient(ingredient)">verwijderen</button> -->
+  </div>
+</div>
+<div class="box">
+  <div *ngFor="let ingredient of boodschappenlijst">
+    {{ingredient.naam}} {{ingredient.hoeveelheid}} {{ingredient.eenheid}}
+  </div>
 </div>

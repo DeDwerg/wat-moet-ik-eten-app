@@ -1,5 +1,5 @@
 export class Ingredient {
   naam: string;
-  hoeveelheid: Number;
+  hoeveelheid: number;
   eenheid: string;
 }

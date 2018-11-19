@@ -4,6 +4,7 @@
   border: 5px solid gray;
   margin: 0;
   align-content: center;
+  vertical-align: top;
 }
 
 .smallBox {
