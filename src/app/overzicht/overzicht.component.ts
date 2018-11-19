@@ -7,6 +7,7 @@ import { Service } from '../shared/service';
 import { Form } from '../form/form';
 import { ActiveGebruiker } from '../shared/active-gebruiker';
 import { Router } from '@angular/router';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-overzicht',
@@ -23,6 +24,8 @@ export class OverzichtComponent extends Form implements OnInit {
   gerechtAanmakenZichtbaar: boolean;
   gerecht: Gerecht;
   ingredienten: Array<Ingredient> = [];
+  gerechtDetailsMap: Map<Gerecht, boolean>;
+  boodschappenlijst: Array<Ingredient>;
 
   constructor(
     private fb: FormBuilder,
@@ -37,10 +40,41 @@ export class OverzichtComponent extends Form implements OnInit {
     this.createForm();
   }
 
+  collapseIngredienten(gerecht: Gerecht) {
+    const currentValue = this.gerechtDetailsMap.get(gerecht);
+    this.gerechtDetailsMap.delete(gerecht);
+    this.gerechtDetailsMap.set(gerecht, !currentValue);
+  }
+
+  isIngredientenExpanded(gerecht: Gerecht) {
+    return this.gerechtDetailsMap.get(gerecht);
+  }
+
+  toevoegenBoodschappenlijst() {
+    this.randomGerecht.ingredienten.forEach(ingredient => {
+      this.boodschappenlijst.forEach(product => {
+        if(product.naam === ingredient.naam ) {
+          const index = this.boodschappenlijst.indexOf(product);
+          product.hoeveelheid = product.hoeveelheid + ingredient.hoeveelheid;
+          this.boodschappenlijst.splice(index, 1);
+          this.boodschappenlijst.push(product);
+          // nog testen
+          // dingetjes optellen en rekening houden met aantallen
+        } else {
+          this.boodschappenlijst.push(ingredient);
+        }
+      });
+    });
+  }
+
   ngOnInit() {
     this.gebruiker = this.activeGebruiker.getGebruiker();
+    this.gerechtDetailsMap = new Map<Gerecht, boolean>();
     this.appService.getGerechten(this.gebruiker).subscribe((gerechten: Array<Gerecht>) => {
       this.gerechten = gerechten;
+      for(const gerecht of this.gerechten) {
+        this.gerechtDetailsMap.set(gerecht, false);
+      }
     });
    }
 
